@@ -39,6 +39,20 @@ extern "C" {
 typedef CTFontCollection* CTFontCollectionRef;
 #else
 typedef struct CF_BRIDGED_TYPE(id) CTFontCollection* CTFontCollectionRef;
+
+/* Public Core Text API that Opal's header did not declare. The options control
+   -CopyFontAttribute's de-duplication and ordering. */
+enum {
+  kCTFontCollectionCopyDefaultOptions = 0,
+  kCTFontCollectionCopyUnique = 1,
+  kCTFontCollectionCopyStandardSort = 2
+};
+typedef uint32_t CTFontCollectionCopyOptions;
+
+CFArrayRef CTFontCollectionCopyFontAttribute(
+  CTFontCollectionRef collection,
+  CFStringRef attributeName,
+  CTFontCollectionCopyOptions options);
 #endif
 
 /* Callbacks */
